@@ -1,4 +1,4 @@
-# Lumen Maze - Song Integration Edition
+# Lumen Maze 
 
 A top-down memory & rhythm maze game where you navigate through pitch-black mazes using brief camera-flash pulses synchronized with the music's beat.
 
