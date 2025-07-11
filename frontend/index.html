@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lumen Maze</title>
+
+    <!-- Tailwind CDN (quick styles) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+
+  <body class="bg-black text-white flex items-center justify-center h-screen">
+    <!-- HUD -->
+    <div id="hud" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 flex space-x-6 text-lg" style="margin-top: -350px;">
+      <div id="health" class="text-red-400 flex items-center space-x-2">
+        <span>❤️</span>
+        <div class="w-20 h-4 bg-gray-700 rounded-full overflow-hidden">
+          <div id="health-bar" class="h-full bg-red-500 transition-all duration-300" style="width: 100%"></div>
+        </div>
+        <span id="health-text">100%</span>
+      </div>
+      <span id="level">Level 1</span>
+      <span id="score">Score 0</span>
+      <span id="bpm" class="text-cyan-400">♫ 120 BPM</span>
+      <span id="song-name" class="text-purple-400 hidden">♪ No Song</span>
+    </div>
+
+    <!-- Canvas -->
+    <canvas id="game" width="600" height="600" class="border-2 border-cyan-400"></canvas>
+
+    <!-- Overlay screens -->
+    <div id="overlay"
+         class="fixed inset-0 bg-black/90 flex flex-col items-center justify-center text-center hidden">
+      <h1 id="overlay-title" class="text-3xl mb-4"></h1>
+      
+      <!-- Song Selection -->
+      <div id="song-selection" class="mb-6 bg-gray-800 p-6 rounded-lg max-w-md">
+        <h3 class="text-xl mb-4 text-purple-400">Choose Your Beat</h3>
+        
+        <!-- Predefined Songs -->
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-2">Select a Song:</label>
+          <select id="song-select" class="w-full px-3 py-2 text-black rounded">
+            <option value="">Select a song...</option>
+          </select>
+        </div>
+        
+        <!-- File Upload -->
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-2">Or Upload Your Own:</label>
+          <input type="file" id="file-input" accept="audio/*" class="hidden" />
+          <button id="upload-btn" class="px-4 py-2 bg-purple-600 rounded hover:bg-purple-500 mb-2">
+            Upload Song
+          </button>
+          <div class="flex items-center space-x-2">
+            <input id="bpm-input" type="number" min="60" max="300" placeholder="BPM" 
+                   class="px-3 py-1 text-black rounded w-20" />
+            <span class="text-sm text-gray-400">BPM (60-300)</span>
+          </div>
+        </div>
+        
+        <div class="text-xs text-gray-400 mt-2">
+          Tip: Higher BPM = faster gameplay!<br>
+          Upload MP3, WAV, or OGG files<br>
+          BPM detection is automatic for uploaded songs
+        </div>
+      </div>
+      
+      <div id="game-over-content" class="hidden">
+        <div id="score-entry" class="mb-6">
+          <input id="name-input" type="text" placeholder="Enter your name" maxlength="24" 
+                 class="mb-4 px-4 py-2 text-black rounded" />
+          <div class="space-x-3">
+            <button id="submit-score-btn" class="px-6 py-2 bg-blue-600 rounded hover:bg-blue-500">
+              Submit Score
+            </button>
+            <button id="skip-score-btn" class="px-6 py-2 bg-gray-600 rounded hover:bg-gray-500">
+              Skip
+            </button>
+          </div>
+        </div>
+        
+        <div id="score-submitted" class="hidden mb-6">
+          <p class="text-green-400 mb-4">Score submitted!</p>
+          <div class="space-y-3">
+            <button id="try-again-btn" class="block w-full px-6 py-3 bg-green-600 rounded hover:bg-green-500 text-lg">
+              Try Again
+            </button>
+            <button id="main-menu-btn" class="block w-full px-6 py-3 bg-purple-600 rounded hover:bg-purple-500 text-lg">
+              Main Menu
+            </button>
+          </div>
+        </div>
+        
+        <div id="leaderboard" class="mb-4 text-left bg-gray-800 p-4 rounded max-w-sm">
+          <h3 class="text-xl mb-2 text-center">Top 10 Scores</h3>
+          <ol id="leaderboard-list" class="text-sm space-y-1"></ol>
+        </div>
+      </div>
+      
+      <!-- Pause Menu -->
+      <div id="pause-content" class="hidden mb-6">
+        <p class="text-lg mb-6 text-gray-300">Press ESC again to continue or choose an option below:</p>
+        <div class="space-y-3">
+          <button id="continue-btn" class="block w-full px-6 py-3 bg-green-600 rounded hover:bg-green-500 text-lg">
+            Continue Game
+          </button>
+          <button id="quit-btn" class="block w-full px-6 py-3 bg-red-600 rounded hover:bg-red-500 text-lg">
+            Quit to Main Menu
+          </button>
+        </div>
+      </div>
+      <button id="play-btn"
+              class="px-6 py-2 bg-cyan-600 rounded hover:bg-cyan-500">Play</button>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
